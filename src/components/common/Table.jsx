@@ -97,7 +97,8 @@ const Table = (props) => {
 					pageSize: pageSize,
 				}}
 				paginationMode='server'
-				rowCount={resPaginator ? resPaginator?.total_entries : 0}
+				// rowCount={resPaginator ? resPaginator?.total_entries : 0}
+				rowCount={resPaginator ? resPaginator?.total_entries : 7}
 				onPaginationModelChange={handlePaginationChange}
 				hideFooterPagination={!showPagination}
 			/>
