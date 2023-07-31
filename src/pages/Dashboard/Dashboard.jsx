@@ -2,26 +2,28 @@ import { useState } from "react";
 import moment from "moment/moment";
 
 import { Button, Chip, Grid, IconButton, Paper, Tooltip } from "@mui/material";
-import AddIcon from '@mui/icons-material/Add';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
+import AddIcon from "@mui/icons-material/Add";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 import Axios from "../../services/api/Config";
 import Table from "../../components/common/Table";
-import { deletePatientURL, patientListURL } from "../../services/api/routes/common";
+import {
+	deletePatientURL,
+	patientListURL,
+} from "../../services/api/routes/common";
 
 import DeletePatientModel from "./components/DeletePatientModel";
 import AddEditPatientModel from "./components/AddEditPatientModel";
 
 const Dashboard = () => {
-
 	const [isDeleteLoading, setIsDeleteLoading] = useState(false);
-	const [refreshToggle, setRefreshToggle] = useState(false)
-	const [deleteOpen, setDeleteOpen] = useState(null)
+	const [refreshToggle, setRefreshToggle] = useState(false);
+	const [deleteOpen, setDeleteOpen] = useState(null);
 
-	const [isEdit, setIsEdit] = useState(false)
-	const [rowValue, setRowValue] = useState(null)
-	const [addEditModel, setAddEditModel] = useState(false)
+	const [isEdit, setIsEdit] = useState(false);
+	const [rowValue, setRowValue] = useState(null);
+	const [addEditModel, setAddEditModel] = useState(false);
 
 	const tableColumn = [
 		{
@@ -29,11 +31,7 @@ const Dashboard = () => {
 			headerName: "Patient ID",
 			minWidth: 100,
 			hideable: false,
-			renderCell: ({ row }) => (
-				<strong>
-					{row?.patientCode}
-				</strong>
-			),
+			renderCell: ({ row }) => <strong>{row?.patientCode}</strong>,
 		},
 		{
 			field: "name",
@@ -41,11 +39,7 @@ const Dashboard = () => {
 			minWidth: 180,
 			hideable: false,
 			renderCell: ({ row }) => {
-				return (
-					<>
-						{row?.name}
-					</>
-				);
+				return <>{row?.name}</>;
 			},
 		},
 		{
@@ -73,9 +67,7 @@ const Dashboard = () => {
 			headerName: "DOB",
 			minWidth: 120,
 			renderCell: ({ row }) => (
-				<>
-					{moment(row?.dateOfBirth).format('DD-MM-YYYY')}
-				</>
+				<>{moment(row?.dateOfBirth).format("DD-MMM-YYYY")}</>
 			),
 		},
 		{
@@ -85,7 +77,7 @@ const Dashboard = () => {
 			renderCell: ({ row }) => (
 				<>
 					<Chip
-						size="small"
+						size='small'
 						label={`${row?.status}`}
 						color={`${getStatusBadgeColor(row?.status)}`}
 					/>
@@ -95,17 +87,17 @@ const Dashboard = () => {
 		{
 			field: "_id",
 			headerName: "Actions",
-			align: 'right',
-			headerAlign: 'right',
+			align: "right",
+			headerAlign: "right",
 			renderCell: ({ row }) => (
 				<>
-					<Tooltip title="Edit Patient" placement="top" arrow>
+					<Tooltip title='Edit Patient' placement='top' arrow>
 						<IconButton onClick={() => handleAddEditModelOpen(row)}>
 							<EditIcon />
 						</IconButton>
 					</Tooltip>
-					<Tooltip title="Delete Patient" placement="top" arrow>
-						<IconButton color="error" onClick={() => handleDeleteOpen(row)}>
+					<Tooltip title='Delete Patient' placement='top' arrow>
+						<IconButton color='error' onClick={() => handleDeleteOpen(row)}>
 							<DeleteIcon />
 						</IconButton>
 					</Tooltip>
@@ -115,27 +107,27 @@ const Dashboard = () => {
 	];
 
 	const getStatusBadgeColor = (status) => {
-		if (status === 'Terminated') return 'default'
-		if (status === 'Superannuated') return 'info'
-		return 'success'
-	}
+		if (status === "Terminated") return "default";
+		if (status === "Superannuated") return "info";
+		return "success";
+	};
 
 	const handleAddEditModelOpen = (value = false) => {
-		setAddEditModel(true)
+		setAddEditModel(true);
 		if (value) {
-			setIsEdit(true)
-			setRowValue(value)
+			setIsEdit(true);
+			setRowValue(value);
 		}
-	}
+	};
 
 	const handleAddEditModelClose = () => {
-		setAddEditModel(null)
+		setAddEditModel(null);
 		if (isEdit) {
-			setIsEdit(false)
-			setRowValue(null)
+			setIsEdit(false);
+			setRowValue(null);
 		}
 		setRefreshToggle((prev) => !prev);
-	}
+	};
 
 	const handleDeleteClose = () => setDeleteOpen(null);
 	const handleDeleteOpen = (row) => setDeleteOpen(row);
@@ -162,15 +154,20 @@ const Dashboard = () => {
 							display: "flex",
 							flexDirection: "column",
 						}}>
-						<div className="d-flex justify-content-between mb-3">
-							<h4 >Patients</h4>
-							<Button size="small" variant="contained" startIcon={<AddIcon />} onClick={() => handleAddEditModelOpen(false)}>
+						<div className='d-flex justify-content-between mb-3'>
+							<h4>Patients</h4>
+							<Button
+								size='small'
+								variant='contained'
+								sx={{ textTransform: "none" }}
+								startIcon={<AddIcon />}
+								onClick={() => handleAddEditModelOpen(false)}>
 								Add Patient
 							</Button>
 						</div>
 						<Table
 							columns={tableColumn}
-							dataURL={patientListURL} 
+							dataURL={patientListURL}
 							checkEqual={refreshToggle}
 						/>
 					</Paper>

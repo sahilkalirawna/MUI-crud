@@ -18,11 +18,6 @@ const Table = (props) => {
 		sorting,
 		selectValues,
 		checkEqual = true,
-		// customStyles = {},
-		// expandableRows = false,
-		// tableRefresh = false,
-		// expandedComponent,
-		// conditionalRowStyles = [],
 	} = props;
 
 	const showPagination = paginationSetting ? true : paginationSetting;
@@ -31,8 +26,6 @@ const Table = (props) => {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [pageSize, setPageSize] = useState(10);
 	const [resPaginator, setResPaginator] = useState();
-
-	// const defaultSort = sorting ? Object.keys(sorting)[0] : null;
 
 	const [obj, setObj] = useState({
 		query: filter ? filter.query : query ? query : undefined,
@@ -46,8 +39,6 @@ const Table = (props) => {
 		},
 		search: filter ? filter.search : search ? search : undefined,
 	});
-
-	// const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
 
 	useEffect(() => {
 		if (obj && dataURL) {
@@ -97,8 +88,7 @@ const Table = (props) => {
 					pageSize: pageSize,
 				}}
 				paginationMode='server'
-				// rowCount={resPaginator ? resPaginator?.total_entries : 0}
-				rowCount={resPaginator ? resPaginator?.total_entries : 7}
+				rowCount={resPaginator ? resPaginator?.total_entries : 0}
 				onPaginationModelChange={handlePaginationChange}
 				hideFooterPagination={!showPagination}
 			/>
